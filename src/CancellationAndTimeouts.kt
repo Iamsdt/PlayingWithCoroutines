@@ -1,7 +1,26 @@
 import kotlinx.coroutines.*
 
 fun main() {
-    cancel3()
+    cancel4()
+}
+
+fun cancel4() = runBlocking {
+
+    val job = launch{
+        try{
+            repeat(100){
+                println("I'm sleeping $it ...")
+                delay(500L)
+            }
+        } finally {
+            println("I'm running finally")
+        }
+    }
+
+    delay(1300L) // delay a bit
+    println("main: I'm tired of waiting!")
+    job.cancelAndJoin() // cancels the job and waits for its completion
+    println("main: Now I can quit.")
 }
 
 // Making computation code cancellable
